@@ -1,5 +1,6 @@
 basePath: '$(ALLIAGE_TS_SERVICES_BASEPATH?dist)'
 paths: [
   'services/**/*',
-  'processes/**/*'
+  'processes/**/*',
+  'controllers/**/*'
 ]
