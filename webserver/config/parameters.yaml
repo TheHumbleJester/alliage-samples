@@ -1,2 +1,2 @@
-# Put any parameter you want here !
-parameters: ~
+webserver:
+  port: 8080
