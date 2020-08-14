@@ -17,11 +17,16 @@ export default class CountryController extends AbstractController {
 
   public registerRoutes(): Route[] {
     return [
-      [METHOD.GET, "/countries", this.handleCountryList]
+      [METHOD.GET, "/countries", this.handleCountryList],
+      [METHOD.GET, "/countries/:countryCode", this.handleCountryDetail]
     ];
   }
 
   private handleCountryList = async (_req: Request, res: Response) => {
     res.json(await this.countryService.getAllCountries());
+  };
+
+  private handleCountryDetail = async (req: Request, res: Response) => {
+    res.json(await this.countryService.getCountry(req.params.countryCode));
   };
 }

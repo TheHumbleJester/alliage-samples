@@ -22,4 +22,13 @@ export default class CountryService {
   async getAllCountries() {
     return (await this.client.get<Country[]>("/country/all")).data;
   }
+
+  async getCountry(countryCode: string) {
+    try {
+      return (await this.client.get<Country[]>(`/country/code/${countryCode}`)).data[0];
+    }
+    catch (e) {
+      return null;
+    }
+  }
 }
