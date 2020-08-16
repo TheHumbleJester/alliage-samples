@@ -1,8 +1,10 @@
+import { ChildProcess } from "child_process";
+import express, { Request, Response } from "express";
+import { Server } from "http";
 import axios from "axios";
 import getPort from "get-port";
 
 import { Sandbox } from "alliage-sandbox";
-import { ChildProcess } from "child_process";
 
 describe("Main scenario", () => {
   const sandbox = new Sandbox({
@@ -10,6 +12,7 @@ describe("Main scenario", () => {
   });
 
   let webserverPort: number;
+  let countryApiPort: number;
   let childProcess: ChildProcess;
 
   beforeAll(async () => {
@@ -22,11 +25,14 @@ describe("Main scenario", () => {
 
     // Getting random port for webserver
     webserverPort = await getPort();
+    countryApiPort = await getPort();
 
     // Starting the server
     ({ process: childProcess } = sandbox.run(["main"], {
       env: {
         WEBSERVER_PORT: webserverPort.toString(),
+        COUNTRY_API_URL: `http://localhost:${countryApiPort}`,
+        COUNTRY_API_KEY: "country_api_key",
       },
     }));
 
@@ -51,6 +57,43 @@ describe("Main scenario", () => {
 
       expect(res.status).toEqual(200);
       expect(res.data).toEqual("Hello world !");
+    });
+  });
+
+  describe("GET /countries", () => {
+    it("should return the list of countries", async () => {
+      const countryApiMock = express();
+      let request: Request;
+      countryApiMock.get("/country/all", (req: Request, res: Response) => {
+        request = req;
+
+        res.status(200).json([
+          { name: "France", countryCode: "FR" },
+          { name: "Germany", countryCode: "DE" },
+          { name: "Italy", countryCode: "IT" },
+        ]);
+      });
+
+      const server = await new Promise<Server>((resolve) => {
+        const server = countryApiMock.listen(countryApiPort, () =>
+          resolve(server)
+        );
+      });
+
+      const res = await axios.get(
+        `http://localhost:${webserverPort}/countries`
+      );
+
+      expect(request!).toBeDefined();
+      expect(request!.query.key).toEqual("country_api_key");
+      expect(res.status).toEqual(200);
+      expect(res.data).toEqual([
+        { name: "France", countryCode: "FR" },
+        { name: "Germany", countryCode: "DE" },
+        { name: "Italy", countryCode: "IT" },
+      ]);
+
+      server.close();
     });
   });
 });
