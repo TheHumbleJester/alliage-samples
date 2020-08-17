@@ -13,6 +13,8 @@ describe("Main scenario", () => {
 
   let webserverPort: number;
   let countryApiPort: number;
+  let wikipediaApiPort: number;
+
   let childProcess: ChildProcess;
 
   beforeAll(async () => {
@@ -26,6 +28,7 @@ describe("Main scenario", () => {
     // Getting random port for webserver
     webserverPort = await getPort();
     countryApiPort = await getPort();
+    wikipediaApiPort = await getPort();
 
     // Starting the server
     ({ process: childProcess } = sandbox.run(["main"], {
@@ -33,6 +36,7 @@ describe("Main scenario", () => {
         WEBSERVER_PORT: webserverPort.toString(),
         COUNTRY_API_URL: `http://localhost:${countryApiPort}`,
         COUNTRY_API_KEY: "country_api_key",
+        WIKIPEDIA_API_URL: `http://localhost:${wikipediaApiPort}`,
       },
     }));
 
@@ -94,6 +98,60 @@ describe("Main scenario", () => {
       ]);
 
       server.close();
+    });
+  });
+
+  describe("GET /countries/:countryCode", () => {
+    it("should return the list of countries", async () => {
+      const countryApiMock = express();
+      let countryRequest: Request;
+      countryApiMock.get("/country/code/fr", (req: Request, res: Response) => {
+        countryRequest = req;
+
+        res.status(200).json([{ name: "France", countryCode: "FR" }]);
+      });
+
+      const wikipediaApiMock = express();
+      let wikipediaRequest: Request;
+      wikipediaApiMock.get(
+        "/rest_v1/page/summary/France",
+        (req: Request, res: Response) => {
+          wikipediaRequest = req;
+
+          res.status(200).json({ extract: "france description" });
+        }
+      );
+
+      const [countryApiServer, wikipediaApiServer] = await Promise.all([
+        new Promise<Server>((resolve) => {
+          const server = countryApiMock.listen(countryApiPort, () =>
+            resolve(server)
+          );
+        }),
+        new Promise<Server>((resolve) => {
+          const server = wikipediaApiMock.listen(wikipediaApiPort, () =>
+            resolve(server)
+          );
+        }),
+      ]);
+
+      const res = await axios.get(
+        `http://localhost:${webserverPort}/countries/fr`
+      );
+
+      expect(countryRequest!).toBeDefined();
+      expect(countryRequest!.query.key).toEqual("country_api_key");
+
+      expect(wikipediaRequest!).toBeDefined();
+      expect(res.status).toEqual(200);
+      expect(res.data).toEqual({
+        name: "France",
+        countryCode: "FR",
+        description: "france description",
+      });
+
+      countryApiServer.close();
+      wikipediaApiServer.close();
     });
   });
 });
