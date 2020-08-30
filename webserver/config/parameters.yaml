@@ -3,3 +3,5 @@ webserver:
 countryApi:
   url: http://battuta.medunes.net/api
   apiKey: 0b0d29abf4f972d48788065c47db3edb
+wikipediaApi:
+  url: https://en.wikipedia.org/api/
