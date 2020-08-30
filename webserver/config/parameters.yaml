@@ -1,2 +1,5 @@
 webserver:
   port: 8080
+countryApi:
+  url: http://battuta.medunes.net/api
+  apiKey: 0b0d29abf4f972d48788065c47db3edb

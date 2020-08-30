@@ -19,6 +19,7 @@
     "alliage-parameters-loader": "^1.1.1",
     "alliage-process-manager": "^1.1.1",
     "alliage-service-loader": "^1.1.1",
+    "axios": "~0.18.x",
     "express": "^4.17.1"
   },
   "devDependencies": {
