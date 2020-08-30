@@ -1,7 +1,7 @@
 webserver:
-  port: 8080
+  port: $(WEBSERVER_PORT?8080)
 countryApi:
-  url: http://battuta.medunes.net/api
-  apiKey: 0b0d29abf4f972d48788065c47db3edb
+  url: $(COUNTRY_API_URL?http://battuta.medunes.net/api)
+  apiKey: $(COUNTRY_API_KEY?0b0d29abf4f972d48788065c47db3edb)
 wikipediaApi:
-  url: https://en.wikipedia.org/api/
+  url: $(WIKIPEDIA_API_URL?https://en.wikipedia.org/api/)

@@ -39,6 +39,8 @@ export default class MainProcess extends AbstractProcess {
 
     app.listen(this.port);
 
+    process.stdout.write(`Listening on: ${this.port}\n`);
+
     return await this.waitToBeShutdown();
   }
 }
