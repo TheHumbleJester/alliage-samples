@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 
-import { AbstractController, METHOD, Route } from "./abstract-controller";
+import { AbstractController, METHOD, Route } from "../../modules/web-server/controllers/abstract-controller";
 import { Service } from "alliage-service-loader/decorators";
 import { service } from "alliage-di/dependencies";
 

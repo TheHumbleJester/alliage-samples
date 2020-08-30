@@ -1,20 +1,10 @@
 import express from "express";
 
 import { AbstractProcess } from "alliage-process-manager/process";
-import { Service } from "alliage-service-loader/decorators";
-import {
-  parameter,
-  allInstancesOf,
-  Constructor,
-} from "alliage-di/dependencies";
 
 import { AbstractController } from "../controllers/abstract-controller";
 
-@Service("main_process", [
-  parameter("parameters.webserver.port"),
-  allInstancesOf(AbstractController as Constructor),
-])
-export default class MainProcess extends AbstractProcess {
+export class WebProcess extends AbstractProcess {
   private port: number;
   private controllers: AbstractController[];
 
@@ -25,7 +15,7 @@ export default class MainProcess extends AbstractProcess {
   }
 
   getName() {
-    return "main";
+    return "web";
   }
 
   async execute() {
