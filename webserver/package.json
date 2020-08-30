@@ -7,9 +7,11 @@
     "alliage:build": "alliage-scripts build --env=development --use-typescript",
     "alliage:run": "alliage-scripts run",
     "alliage:run:dev": "alliage-scripts run --env=development --use-typescript",
-    "install-modules": "./.scripts/install.js"
+    "install-modules": "./.scripts/install.js",
+    "test:unit": "NODE_ENV=test jest"
   },
   "dependencies": {
+    "@types/jest": "^26.0.10",
     "alliage": "^1.0.0",
     "alliage-config-loader": "^1.1.1",
     "alliage-di": "^1.1.1",
@@ -20,7 +22,9 @@
     "alliage-process-manager": "^1.1.1",
     "alliage-service-loader": "^1.1.1",
     "axios": "~0.18.x",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.3.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.7",

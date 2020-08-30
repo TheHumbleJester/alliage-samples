@@ -4,3 +4,6 @@ paths: [
   'processes/**/*',
   'controllers/**/*'
 ]
+exclude: [
+  '**/__tests__/**'
+]
