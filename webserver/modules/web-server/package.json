@@ -9,14 +9,21 @@
     "dependencies": [
       "alliage-di",
       "alliage-lifecycle",
-      "alliage-process-manager"
-    ]
+      "alliage-process-manager",
+      "alliage-config-loader"
+    ],
+    "installationProcedures": {
+      "copyFiles": [
+        ["base-files/config.yaml", "config/webserver.yaml"]
+      ]
+    }
   },
   "peerDependencies": {
     "express": "^4.17.1",
     "alliage": "^1.0.0",
     "alliage-di": "^1.1.1",
     "alliage-lifecycle": "^1.1.1",
-    "alliage-process-manager": "^1.1.1"
+    "alliage-process-manager": "^1.1.1",
+    "alliage-config-loader": "^1.1.1"
   }
 }

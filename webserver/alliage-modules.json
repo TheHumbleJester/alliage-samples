@@ -7,7 +7,7 @@
     "envs": [
       "development"
     ],
-    "hash": "872ccd9c6dce18ce6ea4d5106540f089"
+    "hash": "7d23ff901039aef6293954d33d23c066"
   },
   "alliage-lifecycle": {
     "module": "alliage-lifecycle",
@@ -15,13 +15,13 @@
       "alliage-di"
     ],
     "envs": [],
-    "hash": "872ccd9c6dce18ce6ea4d5106540f089"
+    "hash": "7d23ff901039aef6293954d33d23c066"
   },
   "alliage-di": {
     "module": "alliage-di",
     "deps": [],
     "envs": [],
-    "hash": "872ccd9c6dce18ce6ea4d5106540f089"
+    "hash": "7d23ff901039aef6293954d33d23c066"
   },
   "alliage-error-handler": {
     "module": "alliage-error-handler",
@@ -35,7 +35,7 @@
       "alliage-lifecycle"
     ],
     "envs": [],
-    "hash": "872ccd9c6dce18ce6ea4d5106540f089"
+    "hash": "7d23ff901039aef6293954d33d23c066"
   },
   "alliage-service-loader": {
     "module": "alliage-service-loader",
@@ -46,7 +46,7 @@
       "alliage-config-loader"
     ],
     "envs": [],
-    "hash": "872ccd9c6dce18ce6ea4d5106540f089"
+    "hash": "7d23ff901039aef6293954d33d23c066"
   },
   "alliage-process-manager": {
     "module": "alliage-process-manager",
@@ -57,7 +57,7 @@
       "alliage-config-loader"
     ],
     "envs": [],
-    "hash": "872ccd9c6dce18ce6ea4d5106540f089"
+    "hash": "7d23ff901039aef6293954d33d23c066"
   },
   "alliage-builder": {
     "module": "alliage-builder",
@@ -107,13 +107,14 @@
     "hash": "47cd76e43f74bbc2e1baaf194d07e1fa"
   },
   "web-server": {
-    "module": "./modules/web-server/",
+    "module": "./modules/web-server",
     "deps": [
       "alliage-di",
       "alliage-lifecycle",
-      "alliage-process-manager"
+      "alliage-process-manager",
+      "alliage-config-loader"
     ],
     "envs": [],
-    "hash": "47cd76e43f74bbc2e1baaf194d07e1fa"
+    "hash": "7d23ff901039aef6293954d33d23c066"
   }
 }
